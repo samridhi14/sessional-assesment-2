@@ -9,6 +9,7 @@ $.get('https://jsonplaceholder.typicode.com/photos?utm_source=Mailerlite&utm_med
 
 function populateAlbum(){
     $('main .album .card-div').html("");
+    $('.album-title').html("");
     let albumId = -1;
     for(var i=0; i<albumnData.length;i++){
         var image = albumnData[i];
@@ -31,6 +32,7 @@ function populateAlbum(){
 function populatePhotos(albumId){
 
     $('main .album .card-div').html("");
+    $('.album-title').text('Album '+albumId);
     for(var i=0; i<albumnData.length;i++){
         var image = albumnData[i];
         if(image.albumId == albumId){
@@ -42,3 +44,7 @@ function populatePhotos(albumId){
     }
 
 }
+
+$('#home').click(function(){
+    populateAlbum();
+});
