@@ -9,15 +9,35 @@ $.get('https://jsonplaceholder.typicode.com/photos?utm_source=Mailerlite&utm_med
 
 function populateAlbum(){
     $('main .album .card-div').html("");
-    var albumId = -1;
+    let albumId = -1;
     for(var i=0; i<albumnData.length;i++){
         var image = albumnData[i];
         if(image.albumId != albumId){
             var $temp = $(template);
             $temp.find('img').attr('src', image.thumbnailUrl);
-            $temp.find('.album-title').text("Album "+(albumId+1))
+            $temp.find('.album-title').text("Album "+image.albumId)
+            $temp.data('data', image.albumId);
             $('main .album .card-div').append($temp);
             albumId = image.albumId;
+            $temp.click(function(){
+                var albumId = $(this).data('data');
+                populatePhotos(albumId);
+            });
+        }
+    }
+
+}
+
+function populatePhotos(albumId){
+
+    $('main .album .card-div').html("");
+    for(var i=0; i<albumnData.length;i++){
+        var image = albumnData[i];
+        if(image.albumId == albumId){
+            var $temp = $(template);
+            $temp.find('img').attr('src', image.thumbnailUrl);
+            $temp.find('.album-title').text(image.title);
+            $('main .album .card-div').append($temp);
         }
     }
 
